@@ -283,9 +283,9 @@ class CoeCliCommands {
 
                 if (typeof options.output === "string") {
                     if ( options.includeSchema === "true") {
-                        results["$schema"] = "./aa4am.schema.json"
-                        let schemaFile =  path.join(__dirname, '..', '..', '..', 'config', 'aa4am.schema.json')
-                        this.writeFile(path.join(path.dirname(options.output), "aa4am.schema.json" ), await this.readFile(schemaFile, { encoding: 'utf-8' }))
+                        results["$schema"] = "./alm.schema.json"
+                        let schemaFile =  path.join(__dirname, '..', '..', '..', 'config', 'alm.schema.json')
+                        this.writeFile(path.join(path.dirname(options.output), "alm.schema.json" ), await this.readFile(schemaFile, { encoding: 'utf-8' }))
                     }
                     this.writeFile(options.output, JSON.stringify(results, null, 2))
                     

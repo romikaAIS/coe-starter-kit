@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "ALM Accelerator for Advanced Makers",
+    "title": "ALM Accelerator for Power Platform",
     "description": "Config Schema",
     "type": "object",
     "properties": {
@@ -33,9 +33,9 @@
         },
         "group": {
             "title": "Azure Active Group Name",
-            "description": "The name of the Azure Actice Directory group to manage access for Advanced Makers",
+            "description": "The name of the Azure Actice Directory group to manage access for ALM",
             "type":"string",
-            "default": "ALMAcceleratorForAdvancedMakers"
+            "default": "ALMAcceleratorForMakers"
         },
         "devOpsOrganization": {
             "title": "Azure DevOps Organization Name",
@@ -44,7 +44,7 @@
         },
         "project": {
             "title": "Azure DevOps project name",
-            "description": "The name of the Azure DevOps project that AA4AM will be be installed to",
+            "description": "The name of the Azure DevOps project that ALM will be be installed to",
             "type":"string",
             "default": "alm-dandbox"
         },
@@ -56,7 +56,7 @@
         },
         "environments": {
             "title": "Power Platform Environment",
-            "description": "The environment where the managed AA4AM solution will be installed",
+            "description": "The environment where the managed ALM solution will be installed",
             "type": "string",
             "default": "https://yourorg.crm.dynamics.com"
         },
