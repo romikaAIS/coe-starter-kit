@@ -30,6 +30,7 @@ import { InstalledExtension } from "azure-devops-node-api/interfaces/ExtensionMa
 
 import url from 'url';
 import { RoleAssignment } from "azure-devops-node-api/interfaces/SecurityRolesInterfaces";
+import { PlaywrightCommand } from "./playwright";
 
 /**
 * Azure DevOps Commands
@@ -37,6 +38,7 @@ import { RoleAssignment } from "azure-devops-node-api/interfaces/SecurityRolesIn
 class DevOpsCommand {
     createWebApi: (orgUrl: string, authHandler: IRequestHandler) => azdev.WebApi
     createAADCommand: () => AADCommand
+    createPlaywright: () => PlaywrightCommand
     getUrl: (url: string) => Promise<string>
     runCommand: (command: string, displayOutput: boolean) => string
     prompt: Prompt
@@ -48,6 +50,7 @@ class DevOpsCommand {
         this.logger = logger
         this.createWebApi = (orgUrl: string, authHandler: IRequestHandler) => new azdev.WebApi(orgUrl, authHandler)
         this.createAADCommand = () => new AADCommand(this.logger)
+        this.createPlaywright = () => new PlaywrightCommand(this.logger)
         this.getUrl = async (url: string) => {
             return (await (axios.get<string>(url))).data
         }
@@ -104,6 +107,9 @@ class DevOpsCommand {
     
             await this.createMakersServiceConnections(args, connection)    
         }
+
+        let playwright = this.createPlaywright()
+        await playwright.runCommands('disableAzureDevOpsAuthorizationScope')
     }
 
     async setupSecurity(args: DevOpsInstallArguments, connection: azdev.WebApi): Promise<DevOpsProjectSecurityContext> {

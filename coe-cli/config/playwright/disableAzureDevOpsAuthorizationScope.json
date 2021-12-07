@@ -1,0 +1,6 @@
+[
+    {
+        "type": "goto",
+        "selector": "https://dev.azure.com/${config:devOpsOrganization}"
+    }
+]

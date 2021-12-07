@@ -1,0 +1,7 @@
+{
+    "automateSteps": true,
+    "azure-pipeline": "",
+    "devOpsOrganization": "",
+    "system-account-user": "",
+    "system-account-password": "{secret:systemAccountPassword}"
+}
