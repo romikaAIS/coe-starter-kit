@@ -65,7 +65,6 @@ steps:
 
     Copy-Item '$(Pipeline.Workspace)/drop/CenterofExcellenceALMAccelerator*.zip' -Destination '$(Pipeline.Workspace)\assetstaging'
     Copy-Item '$(Pipeline.Workspace)/drop/ALMAcceleratorSampleSolution*.zip' -Destination '$(Pipeline.Workspace)\assetstaging'
-    Copy-Item '$(Build.SourcesDirectory)\CenterofExcellenceResources\Release\Collateral\CenterofExcellenceALMAccelerator\*.*' -Destination '$(Pipeline.Workspace)\assetstaging'
     
     $compress = @{
       Path = '$(Pipeline.Workspace)\assetstaging\*.*'
