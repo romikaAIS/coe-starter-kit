@@ -46,23 +46,34 @@ steps:
 
 - powershell: |
     New-Item -Path $(Pipeline.Workspace)\releaseassets -ItemType Directory
+
+    New-Item -Path $(Pipeline.Workspace)\assetstaging -ItemType Directory
+
+    Copy-Item '$(Pipeline.Workspace)\drop\*managed.zip' -Destination '$(Pipeline.Workspace)\assetstaging'
+    Copy-Item '$(Build.SourcesDirectory)\CenterofExcellenceResources\Release\Collateral\CenterofExcellenceALMAccelerator\*.*' -Destination '$(Pipeline.Workspace)\assetstaging'
+
     $compress = @{
-      Path = '$(Pipeline.Workspace)\drop\*managed.zip'
+      Path = '$(Pipeline.Workspace)\assetstaging\*.*'
       CompressionLevel = 'Fastest'
-      DestinationPath = '$(Pipeline.Workspace)\releaseassets\CenterofExcellenceALMAccelerator.zip'
+      DestinationPath = '$(Pipeline.Workspace)\releaseassets\CoEALMAccelerator.zip'
     }
     Compress-Archive @compress
-    Copy-Item '$(Pipeline.Workspace)\drop\ALMAcceleratorFor*managed.zip' -Destination '$(Pipeline.Workspace)\releaseassets'
-    Remove-Item '$(Pipeline.Workspace)\drop\*managed.zip'
+
+    Copy-Item '$(Pipeline.Workspace)\drop\*managed.zip' -Destination '$(Pipeline.Workspace)\releaseassets'
+    Remove-Item $(Pipeline.Workspace)\drop\*managed.zip -Recurse -Force -Confirm:$false
+    Remove-Item $(Pipeline.Workspace)\assetstaging -Recurse -Force -Confirm:$false
+    New-Item -Path $(Pipeline.Workspace)\assetstaging -ItemType Directory
+
+    Copy-Item '$(Pipeline.Workspace)/drop/CenterofExcellenceALMAccelerator*.zip' -Destination '$(Pipeline.Workspace)\assetstaging'
+    Copy-Item '$(Pipeline.Workspace)/drop/ALMAcceleratorSampleSolution*.zip' -Destination '$(Pipeline.Workspace)\assetstaging'
+    Copy-Item '$(Build.SourcesDirectory)\CenterofExcellenceResources\Release\Collateral\CenterofExcellenceALMAccelerator\*.*' -Destination '$(Pipeline.Workspace)\assetstaging'
     
     $compress = @{
-      Path = '$(Pipeline.Workspace)/drop/ALMAccelerator*.zip'
+      Path = '$(Pipeline.Workspace)\assetstaging\*.*'
       CompressionLevel = 'Fastest'
-      DestinationPath = '$(Pipeline.Workspace)\releaseassets\CenterofExcellenceALMAccelerator-Unmanaged.zip'
+      DestinationPath = '$(Pipeline.Workspace)/releaseassets/CoEALMAccelerator-Unmanaged.zip'
     }
     Compress-Archive @compress
-    Copy-Item '$(Pipeline.Workspace)\drop\ALMAcceleratorSample*.zip' -Destination '$(Pipeline.Workspace)\releaseassets'
-    Copy-Item '$(Build.SourcesDirectory)\CenterofExcellenceResources\Release\Collateral\CenterofExcellenceALMAccelerator\*.*' -Destination '$(Pipeline.Workspace)\releaseassets'
   displayName: 'Package solutions based on managed vs. unmanaged'
 
 - template: Pipelines\Templates\create-release-github.yml@PipelineRepo
